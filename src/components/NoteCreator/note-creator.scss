@@ -1,0 +1,29 @@
+.note-creator{ 
+    flex: 1;
+    margin: 20px 0 20px 0; 
+    width: 500px;
+    height: 120px;
+    border: solid 1px black; 
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+        input {
+            align-self: center; 
+            padding: 5px;
+            width: 70%;
+            margin: 10px 0 10px 0
+        }
+        input::placeholder{
+            text-align: center;
+        }
+    }
+}
+
+
+button {
+    width: 30%; 
+}
+

@@ -1,0 +1,33 @@
+.note-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid black;
+    min-height: 50px;
+    width: 600px; 
+    word-wrap: break-word;
+    margin-bottom: 10px;
+}
+
+.note-wrapper {
+    textarea {
+        resize: none;
+        width: 90%;  
+        border: none;
+        word-break: break-word;
+        background-color: #ffffff;
+    }
+}
+
+.buttonsWrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+button {
+    margin: 20px 0 20px 0;
+}
