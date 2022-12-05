@@ -16,7 +16,7 @@ interface NoteProps {
   setNotes: React.Dispatch<React.SetStateAction<INote[]>>;
 }
 
-export const TAG = /(?<=\#)([\S]+?)(?=\ |$|\n)/g;
+export const TAG = /(?<=#)([\S]+?)(?= |$|\n)/g;
 
 export const Note = ({ note, deleteNote, notes, setNotes }: NoteProps) => {
   const [noteText, setNoteText] = useState(note.noteText);
