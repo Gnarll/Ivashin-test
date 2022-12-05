@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { INote } from "../Note";
+import { INote, TAG } from "../Note";
 import uuid from "react-uuid";
+import HighlightWithinTextarea from "react-highlight-within-textarea";
 import "./note-creator.scss";
 
 export const NoteCreator = ({
@@ -13,20 +14,19 @@ export const NoteCreator = ({
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setTitle(event.target.value);
 
-  const [noteText, setNoteText] = useState("");
-  const handleNoteTextChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setNoteText(event.target.value);
+  const [noteText, setNoteText] = useState("Note text");
+  const handleNoteTextChange = (value: string) => setNoteText(value);
 
   const createNote = () => {
     let note: INote = {
       id: uuid(),
       title,
       noteText,
+      tags: noteText.match(TAG),
     };
-
     addNote(note);
 
-    setNoteText("");
+    setNoteText("Note text");
     setTitle("");
   };
 
@@ -41,11 +41,8 @@ export const NoteCreator = ({
           value={title}
           onChange={handleTitleChange}
         />
-        <input
-          type="text"
-          id="title"
-          name="lname"
-          placeholder="Note text"
+        <HighlightWithinTextarea
+          highlight={TAG}
           value={noteText}
           onChange={handleNoteTextChange}
         />

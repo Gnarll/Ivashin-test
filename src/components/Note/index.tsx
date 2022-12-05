@@ -1,10 +1,12 @@
-import { KeyboardEventHandler, useState } from "react";
+import { useState } from "react";
+import HighlightWithinTextarea from "react-highlight-within-textarea";
 import "./note.scss";
 
 export interface INote {
   id: string;
   title: string;
   noteText: string;
+  tags?: any;
 }
 
 interface NoteProps {
@@ -14,17 +16,22 @@ interface NoteProps {
   setNotes: React.Dispatch<React.SetStateAction<INote[]>>;
 }
 
+export const TAG = /(?<=\#)([\S]+?)(?=\ |$|\n)/g;
+
 export const Note = ({ note, deleteNote, notes, setNotes }: NoteProps) => {
   const [noteText, setNoteText] = useState(note.noteText);
 
-  const handleNoteTextChange = (event: any) => setNoteText(event.target.value);
+  const handleNoteTextChange = (value: string) => setNoteText(value);
 
   const [inputIsDisabled, setInputIsDisabled] = useState(true);
 
   const editHandler = () => {
     if (!inputIsDisabled) {
       const updatedNotes = notes.map((item) => {
-        if (item.id === note.id) item.noteText = noteText;
+        if (item.id === note.id) {
+          item.noteText = noteText;
+          note.tags = item.noteText.match(TAG);
+        }
         return item;
       });
       setNotes(updatedNotes);
@@ -35,11 +42,13 @@ export const Note = ({ note, deleteNote, notes, setNotes }: NoteProps) => {
   return (
     <div className="note-wrapper">
       <h3>{note.title}</h3>
-      <textarea
-        disabled={inputIsDisabled}
+      <HighlightWithinTextarea
+        highlight={TAG}
+        readOnly={inputIsDisabled}
         value={noteText}
-        onInput={handleNoteTextChange}
+        onChange={handleNoteTextChange}
       />
+
       <div className="buttonsWrapper">
         <button type="button" onClick={editHandler}>
           Edit
@@ -53,6 +62,18 @@ export const Note = ({ note, deleteNote, notes, setNotes }: NoteProps) => {
           Delete
         </button>
       </div>
+      {note.tags && note.tags.length > 0 ? (
+        <div className="tags">
+          <p>Tags</p>
+          {note.tags.map((tag: any, index: number) => {
+            return (
+              <div className="tag">
+                <p>#{tag}</p>
+              </div>
+            );
+          })}
+        </div>
+      ) : null}
     </div>
   );
 };

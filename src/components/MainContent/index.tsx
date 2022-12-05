@@ -18,18 +18,59 @@ export const MainContent = () => {
     });
   };
 
+  const [findTagText, setFindTagText] = useState("");
+
+  const tagInputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFindTagText(event.target.value);
+  };
+
+  const [isAppliedFilter, setIsAppliedFilter] = useState(false);
+
   return (
     <div className="main-content">
+      <div className="filter-wrapper">
+        <input
+          value={findTagText}
+          onChange={tagInputHandler}
+          placeholder="Find by tag"
+        />
+        <button
+          disabled={isAppliedFilter}
+          onClick={() => setIsAppliedFilter(true)}
+        >
+          Apply
+        </button>
+        <button
+          disabled={!isAppliedFilter}
+          onClick={() => setIsAppliedFilter(false)}
+        >
+          Reset
+        </button>
+      </div>
       {notes.map((note) => {
-        return (
-          <Note
-            note={note}
-            key={note.id}
-            deleteNote={deleteNote}
-            notes={notes}
-            setNotes={setNotes}
-          />
-        );
+        if (!isAppliedFilter)
+          return (
+            <Note
+              note={note}
+              key={note.id}
+              deleteNote={deleteNote}
+              notes={notes}
+              setNotes={setNotes}
+            />
+          );
+        else {
+          if (note.tags?.includes(findTagText))
+            return (
+              <Note
+                note={note}
+                key={note.id}
+                deleteNote={deleteNote}
+                notes={notes}
+                setNotes={setNotes}
+              />
+            );
+          return null;
+        }
       })}
       <NoteCreator addNote={addNote} />
     </div>
