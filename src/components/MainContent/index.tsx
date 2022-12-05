@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { INote, Note } from "../Note";
 import { NoteCreator } from "../NoteCreator";
 import "./main-content.scss";
 
 export const MainContent = () => {
   const [notes, setNotes] = useState<INote[]>([]);
+  console.log(1111, notes);
+
+  useEffect(() => {
+    const items = { ...localStorage };
+    for (let i in items) {
+      addNote(JSON.parse(items[i]));
+    }
+  }, []);
 
   const addNote = (note: INote) => {
     setNotes((state) => {
@@ -13,6 +21,7 @@ export const MainContent = () => {
   };
 
   const deleteNote = (id: string) => {
+    localStorage.removeItem(id.toString());
     setNotes((state) => {
       return state.filter((item) => id !== item.id);
     });

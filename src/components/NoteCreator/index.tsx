@@ -25,7 +25,7 @@ export const NoteCreator = ({
       tags: noteText.match(TAG),
     };
     addNote(note);
-
+    localStorage.setItem(note.id.toString(), JSON.stringify(note));
     setNoteText("Note text");
     setTitle("");
   };

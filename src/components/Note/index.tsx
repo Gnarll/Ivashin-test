@@ -32,6 +32,7 @@ export const Note = ({ note, deleteNote, notes, setNotes }: NoteProps) => {
           item.noteText = noteText;
           note.tags = item.noteText.match(TAG);
         }
+        localStorage.setItem(item.id, JSON.stringify(item));
         return item;
       });
       setNotes(updatedNotes);
