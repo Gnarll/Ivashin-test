@@ -5,7 +5,6 @@ import "./main-content.scss";
 
 export const MainContent = () => {
   const [notes, setNotes] = useState<INote[]>([]);
-  console.log(1111, notes);
 
   useEffect(() => {
     const items = { ...localStorage };
